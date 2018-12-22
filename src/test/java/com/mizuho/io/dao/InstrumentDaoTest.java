@@ -1,0 +1,133 @@
+package com.mizuho.io.dao;
+
+import com.mizuho.io.entity.InstrumentEntity;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.junit.jupiter.api.Test;
+
+import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+class InstrumentDaoTest {
+
+    private Dao<InstrumentEntity> dao = new InstrumentDao();
+
+    @Test
+    final void savingMultipleInstrumentsToTheCache() {
+
+        InstrumentEntity firstInstrument = new InstrumentEntity();
+        firstInstrument.setTicker("INTC");
+        firstInstrument.setDate(new Date());
+        firstInstrument.setVendor("CQG");
+        firstInstrument.setPrice(new BigDecimal(44.84));
+        dao.save(firstInstrument);
+
+        InstrumentEntity secondInstrument = new InstrumentEntity();
+        secondInstrument.setTicker("GOOG");
+        secondInstrument.setDate(new Date());
+        secondInstrument.setVendor("Bloomberg");
+        secondInstrument.setPrice(new BigDecimal(979.84));
+        dao.save(secondInstrument);
+
+        assertEquals(dao.get(firstInstrument.getId()), firstInstrument);
+        assertEquals(dao.get(secondInstrument.getId()), secondInstrument);
+    }
+
+    @Test
+    final void deleteMultipleInstrumentsFromTheCache() {
+
+        DateTimeZone timeZone = DateTimeZone.forID("Europe/Paris");
+        DateTime dateTime = new DateTime(new java.util.Date(), timeZone);
+        DateTime twentyNineDays = dateTime.minusDays(29);
+        DateTime thirtyDays = dateTime.minusDays(30);
+        DateTime thirtyOneDays = dateTime.minusDays(31);
+
+        InstrumentEntity firstInstrument = new InstrumentEntity();
+        firstInstrument.setTicker("MSFT");
+        firstInstrument.setDate(twentyNineDays.toDate());
+        firstInstrument.setVendor("CQG");
+        firstInstrument.setPrice(new BigDecimal(98.23));
+        dao.save(firstInstrument);
+
+        InstrumentEntity secondInstrument = new InstrumentEntity();
+        secondInstrument.setTicker("GOOG");
+        secondInstrument.setDate(thirtyDays.toDate());
+        secondInstrument.setVendor("Bloomberg");
+        secondInstrument.setPrice(new BigDecimal(979.84));
+        dao.save(secondInstrument);
+
+        InstrumentEntity thirdInstrument = new InstrumentEntity();
+        thirdInstrument.setTicker("GOOG");
+        thirdInstrument.setDate(thirtyOneDays.toDate());
+        thirdInstrument.setVendor("Bloomberg");
+        thirdInstrument.setPrice(new BigDecimal(98.23));
+        dao.save(thirdInstrument);
+
+        dao.deleteOlderThanDays(30);
+        assertEquals(firstInstrument, dao.get(firstInstrument.getId()));
+        assertEquals(secondInstrument, dao.get(secondInstrument.getId()));
+        assertNull(dao.get(thirdInstrument.getId()));
+    }
+
+    @Test
+    final void findInstrumentsByTicker() {
+        InstrumentEntity firstInstrument = new InstrumentEntity();
+        firstInstrument.setTicker("GOOG");
+        firstInstrument.setDate(new Date());
+        firstInstrument.setVendor("CQG");
+        firstInstrument.setPrice(new BigDecimal(979.84));
+        dao.save(firstInstrument);
+
+        InstrumentEntity secondInstrument = new InstrumentEntity();
+        secondInstrument.setTicker("INTC");
+        secondInstrument.setDate(new Date());
+        secondInstrument.setVendor("CQG");
+        secondInstrument.setPrice(new BigDecimal(44.84));
+        dao.save(secondInstrument);
+
+        InstrumentEntity thirdInstrument = new InstrumentEntity();
+        thirdInstrument.setTicker("GOOG");
+        secondInstrument.setDate(new Date());
+        thirdInstrument.setVendor("Bloomberg");
+        thirdInstrument.setPrice(new BigDecimal(979.84));
+        dao.save(thirdInstrument);
+
+        List<InstrumentEntity> instruments = dao.findByTicker("GOOG");
+        assertEquals(2, instruments.size());
+        assertEquals(firstInstrument, instruments.get(0));
+        assertEquals(thirdInstrument, instruments.get(1));
+    }
+
+    @Test
+    final void findInstrumentsByVendor() {
+        InstrumentEntity firstInstrument = new InstrumentEntity();
+        firstInstrument.setTicker("GOOG");
+        firstInstrument.setDate(new Date());
+        firstInstrument.setVendor("CQG");
+        firstInstrument.setPrice(new BigDecimal(979.84));
+        dao.save(firstInstrument);
+
+        InstrumentEntity secondInstrument = new InstrumentEntity();
+        secondInstrument.setTicker("AAPL");
+        secondInstrument.setDate(new Date());
+        secondInstrument.setVendor("CQG");
+        secondInstrument.setPrice(new BigDecimal(172.29));
+        dao.save(secondInstrument);
+
+        InstrumentEntity thirdInstrument = new InstrumentEntity();
+        thirdInstrument.setTicker("GOOG");
+        secondInstrument.setDate(new Date());
+        thirdInstrument.setVendor("Bloomberg");
+        thirdInstrument.setPrice(new BigDecimal(979.84));
+        dao.save(thirdInstrument);
+
+        List<InstrumentEntity> instruments = dao.findByVendor("CQG");
+        assertEquals(2, instruments.size());
+        assertEquals(firstInstrument, instruments.get(0));
+        assertEquals(secondInstrument, instruments.get(1));
+    }
+}
