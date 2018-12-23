@@ -61,6 +61,22 @@ public class InstrumentEntity {
         this.date = date;
     }
 
+    /**
+     * Indicates whether some other object is "equal to" this one.
+     * The other object is considered to be equal to this one if
+     * <p>
+     * The other object is considered equal to this one if:
+     * <ul>
+     * <li>The price of the other object is equal to this one
+     * <li>The ticker of the other object is equal to this one
+     * <li>The vendor of the other object is equal to this one
+     * </ul>
+     * <p>
+     *
+     * @param o an object
+     * @return {@code true} if the price and ticker and vendor of this object is
+     * equal to the price and ticker and vendor of the object
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,19 +84,19 @@ public class InstrumentEntity {
         InstrumentEntity that = (InstrumentEntity) o;
         return Objects.equals(price, that.price) &&
                 Objects.equals(ticker, that.ticker) &&
-                Objects.equals(vendor, that.vendor) &&
-                Objects.equals(date, that.date);
+                Objects.equals(vendor, that.vendor);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(price, ticker, vendor, date);
+        return Objects.hash(price, ticker, vendor);
     }
 
     @Override
     public String toString() {
         return "InstrumentEntity{" +
-                "price=" + price +
+                "id=" + id +
+                ", price=" + price +
                 ", ticker='" + ticker + '\'' +
                 ", vendor='" + vendor + '\'' +
                 ", date=" + date +
