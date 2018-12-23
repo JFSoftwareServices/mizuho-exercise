@@ -79,7 +79,8 @@ class InstrumentControllerIT {
                 createURLWithPort("api/vendor/prices?v=CQG"),
                 HttpMethod.GET, entity, String.class);
 
-        String expectedBody = "{instrument:[{ticker:GOOG,vendor:CQG,price:979.84},{ticker:APPL,vendor:CQG,price:150.73},{ticker:GOOG,vendor:CQG,price:979.84},{ticker:GOOG,vendor:CQG,price:979.84}]}";
+        String expectedBody = "{instrument:[{ticker:GOOG,vendor:CQG,price:979.84},{ticker:APPL,vendor:CQG,price:150.73}," +
+                "{ticker:GOOG,vendor:CQG,price:979.84},{ticker:GOOG,vendor:CQG,price:979.84}]}";
         JSONAssert.assertEquals(expectedBody, response.getBody(), false);
     }
 
@@ -93,7 +94,10 @@ class InstrumentControllerIT {
                 createURLWithPort("api/vendor/prices?v=CQG"),
                 HttpMethod.GET, entity, String.class);
 
-        String expectedBody = "<instruments><instrument><ticker>GOOG</ticker><vendor>CQG</vendor><price>979.84</price></instrument><instrument><ticker>APPL</ticker><vendor>CQG</vendor><price>150.73</price></instrument><instrument><ticker>GOOG</ticker><vendor>CQG</vendor><price>979.84</price></instrument><instrument><ticker>GOOG</ticker><vendor>CQG</vendor><price>979.84</price></instrument></instruments>";
+        String expectedBody = "<instruments><instrument><ticker>GOOG</ticker><vendor>CQG</vendor><price>979.84</price>" +
+                "</instrument><instrument><ticker>APPL</ticker><vendor>CQG</vendor><price>150.73</price></instrument>" +
+                "<instrument><ticker>GOOG</ticker><vendor>CQG</vendor><price>979.84</price></instrument><instrument>" +
+                "<ticker>GOOG</ticker><vendor>CQG</vendor><price>979.84</price></instrument></instruments>";
         assertEquals(expectedBody, response.getBody());
     }
 
@@ -107,7 +111,8 @@ class InstrumentControllerIT {
                 createURLWithPort("api/instrument/prices?q=GOOG"),
                 HttpMethod.GET, entity, String.class);
 
-        String expected = "{instrument:[{ticker:GOOG,vendor:CQG,price:979.84},{ticker:GOOG,vendor:CQG,price:979.84},{ticker:GOOG,vendor:CQG,price:979.84}]}";
+        String expected = "{instrument:[{ticker:GOOG,vendor:CQG,price:979.84},{ticker:GOOG,vendor:CQG,price:979.84}," +
+                "{ticker:GOOG,vendor:CQG,price:979.84}]}";
         JSONAssert.assertEquals(expected, response.getBody(), false);
     }
 
@@ -121,7 +126,8 @@ class InstrumentControllerIT {
                 createURLWithPort("api/instrument/prices?q=APPL"),
                 HttpMethod.GET, entity, String.class);
 
-        String expectedBody = "<instruments><instrument><ticker>APPL</ticker><vendor>CQG</vendor><price>150.73</price></instrument></instruments>";
+        String expectedBody = "<instruments><instrument><ticker>APPL</ticker><vendor>CQG</vendor><price>150.73</price>" +
+                "</instrument></instruments>";
         assertEquals(expectedBody, response.getBody());
     }
 
