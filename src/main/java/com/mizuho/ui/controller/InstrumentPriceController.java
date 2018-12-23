@@ -1,10 +1,9 @@
 package com.mizuho.ui.controller;
 
+import com.mizuho.service.InstrumentService;
+import com.mizuho.shared.dto.InstrumentDto;
 import com.mizuho.ui.model.response.InstrumentResponseLine;
 import com.mizuho.ui.model.response.InstrumentsRestResponse;
-import com.mizuho.shared.dto.InstrumentDto;
-import com.mizuho.service.InstrumentService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +13,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class InstrumentPriceController {
 
-    @Autowired
-    private InstrumentService instrumentService;
+    private final InstrumentService instrumentService;
+
+    public InstrumentPriceController(InstrumentService instrumentService) {
+        this.instrumentService = instrumentService;
+    }
 
     @GetMapping(path = "/instrument/prices", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody

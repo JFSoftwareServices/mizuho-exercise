@@ -1,12 +1,9 @@
 package com.mizuho.ui.model.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
-import javax.xml.bind.annotation.*;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 

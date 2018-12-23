@@ -2,16 +2,17 @@ package com.mizuho.route;
 
 import com.mizuho.io.entity.InstrumentEntity;
 import com.mizuho.service.InstrumentService;
-import com.mizuho.service.impl.InstrumentServiceImpl;
 import org.apache.camel.builder.RouteBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PricePublishRouteBuilder extends RouteBuilder {
 
-    @Autowired
-    InstrumentServiceImpl instrumentService;
+    private final InstrumentService instrumentService;
+
+    public PricePublishRouteBuilder(InstrumentService instrumentService) {
+        this.instrumentService = instrumentService;
+    }
 
     public void configure() {
         errorHandler(deadLetterChannel("{{deadLetter}}"));

@@ -2,14 +2,17 @@ package com.mizuho.route;
 
 import com.mizuho.service.InstrumentService;
 import org.apache.camel.builder.RouteBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class StalePriceEvictionRouteBuilder extends RouteBuilder {
 
-    @Autowired
+    final
     InstrumentService instrumentService;
+
+    public StalePriceEvictionRouteBuilder(InstrumentService instrumentService) {
+        this.instrumentService = instrumentService;
+    }
 
     public void configure() {
         errorHandler(deadLetterChannel("jms:queue:dead"));

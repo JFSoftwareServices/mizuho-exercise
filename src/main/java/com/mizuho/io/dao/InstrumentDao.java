@@ -3,10 +3,12 @@ package com.mizuho.io.dao;
 import com.mizuho.io.entity.InstrumentEntity;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
@@ -14,7 +16,7 @@ import java.util.stream.Stream;
 
 import static java.lang.String.valueOf;
 
-@Repository
+@Component
 public class InstrumentDao implements Dao<InstrumentEntity> {
 
     private CacheManager<InstrumentEntity> cache = new CacheManager<>();

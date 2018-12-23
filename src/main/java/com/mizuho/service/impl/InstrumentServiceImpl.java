@@ -6,7 +6,6 @@ import com.mizuho.service.InstrumentService;
 import com.mizuho.shared.dto.InstrumentDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
@@ -15,8 +14,11 @@ import java.util.List;
 @Service
 public class InstrumentServiceImpl implements InstrumentService {
 
-    @Autowired
-    private Dao dao;
+    private final Dao dao;
+
+    public InstrumentServiceImpl(Dao dao) {
+        this.dao = dao;
+    }
 
     public void saveInstrument(InstrumentEntity instrumentEntity) {
         dao.save(instrumentEntity);

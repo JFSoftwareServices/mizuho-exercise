@@ -1,8 +1,6 @@
 package com.mizuho.config;
 
 import org.apache.camel.component.jms.JmsComponent;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.connection.JmsTransactionManager;
 
 import javax.jms.ConnectionFactory;

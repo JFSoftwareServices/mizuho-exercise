@@ -2,7 +2,7 @@ package com.mizuho.ui.controller;
 
 import com.mizuho.PriceApplication;
 import com.mizuho.io.entity.InstrumentEntity;
-import com.mizuho.service.impl.InstrumentServiceImpl;
+import com.mizuho.service.InstrumentService;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ import static org.junit.Assert.assertEquals;
 class InstrumentControllerIT {
 
     @Autowired
-    private InstrumentServiceImpl instrumentService;
+    private InstrumentService instrumentService;
 
     @LocalServerPort
     private int port;
