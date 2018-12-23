@@ -124,4 +124,20 @@ class InstrumentControllerIT {
         String expectedBody = "<instruments><instrument><ticker>APPL</ticker><vendor>CQG</vendor><price>150.73</price></instrument></instruments>";
         assertEquals(expectedBody, response.getBody());
     }
+
+    @Test
+    void instrumentNotFound() {
+        HttpEntity<String> entity = new HttpEntity<String>(null, headers);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                createURLWithPort("api/instrument/prices?q=VOD.L"),
+                HttpMethod.GET, entity, String.class);
+
+
+        String expectedBody = "Could not find prices for instrument VOD.L";
+        assertEquals(expectedBody, response.getBody());
+
+        HttpStatus expectedStatusCode = HttpStatus.NOT_FOUND;
+        assertEquals(expectedStatusCode, response.getStatusCode());
+    }
 }

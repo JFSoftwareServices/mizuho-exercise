@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class InstrumentServiceImpl implements InstrumentService {
@@ -39,7 +40,7 @@ public class InstrumentServiceImpl implements InstrumentService {
         dao.deleteOlderThanDays(daysAgo);
     }
 
-    public List<InstrumentDto> findInstrumentPricesByTicker(String ticker) {
+    public Optional<List<InstrumentDto>> findInstrumentPricesByTicker(String ticker) {
 
         List prices = dao.findByTicker(ticker);
 
@@ -48,6 +49,6 @@ public class InstrumentServiceImpl implements InstrumentService {
 
         List<InstrumentDto> returnValues;
         returnValues = new ModelMapper().map(prices, listType);
-        return returnValues;
+        return Optional.of(returnValues);
     }
 }

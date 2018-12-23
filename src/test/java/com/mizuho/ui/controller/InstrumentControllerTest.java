@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -51,8 +52,8 @@ class InstrumentControllerTest {
     }
 
     @Test
-    void getInstrumentsPricesByInstrumentName() {
-        when(instrumentService.findInstrumentPricesByTicker(anyString())).thenReturn(instrumentDtoList);
+    void findInstrumentsPricesByInstrumentName() {
+        when(instrumentService.findInstrumentPricesByTicker(anyString())).thenReturn(Optional.of(instrumentDtoList));
 
         InstrumentsRestResponse instrumentsRestResponse = instrumentPriceController.findInstrumentPricesByTicker("");
 
@@ -69,7 +70,7 @@ class InstrumentControllerTest {
     }
 
     @Test
-    void getAllPricesForVendor() {
+    void findInstrumentPricesForVendor() {
         when(instrumentService.findInstrumentPricesByVendor(anyString())).thenReturn(instrumentDtoList);
 
         InstrumentsRestResponse instrumentsRestResponse = instrumentPriceController.findInstrumentPricesByVendor("");

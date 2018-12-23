@@ -55,7 +55,7 @@ class InstrumentServiceTest {
     void findInstrumentPricesByInstrumentName() {
         when(dao.findByTicker((anyString()))).thenReturn(entities);
 
-        List<InstrumentDto> instrumentRestResponse = instrumentService.findInstrumentPricesByTicker("");
+        List<InstrumentDto> instrumentRestResponse = instrumentService.findInstrumentPricesByTicker("").orElse(null);
 
         assertNotNull(instrumentRestResponse);
         assertEquals(2, instrumentRestResponse.size());
