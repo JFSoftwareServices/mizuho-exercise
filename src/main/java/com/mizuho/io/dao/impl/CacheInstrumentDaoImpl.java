@@ -1,6 +1,6 @@
 package com.mizuho.io.dao.impl;
 
-import com.mizuho.io.dao.Dao;
+import com.mizuho.io.dao.InstrumentDao;
 import com.mizuho.io.entity.InstrumentEntity;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
@@ -18,24 +19,24 @@ import java.util.stream.Stream;
 import static java.lang.String.valueOf;
 
 @Component
-public class CacheInstrumentDaoImpl implements Dao<InstrumentEntity> {
+public class CacheInstrumentDaoImpl implements InstrumentDao {
 
-    private CacheManager<InstrumentEntity> cache = new CacheManager<>();
+    private CacheManager cache = new CacheManager();
     private AtomicLong id = new AtomicLong();
 
     @Override
-    public InstrumentEntity get(long id) {
+    public Optional<InstrumentEntity> get(long id) {
         return cache.get(valueOf(id));
     }
 
     @Override
-    public List<InstrumentEntity> findByVendor(String vendor) {
-        return cache.getAllValues().parallelStream().filter(i -> i.getVendor().equals(vendor)).collect(Collectors.toList());
+    public Optional<List<InstrumentEntity>> findByVendor(String vendor) {
+        return Optional.of(cache.getAllValues().get().parallelStream().filter(i -> i.getVendor().equals(vendor)).collect(Collectors.toList()));
     }
 
     @Override
-    public List<InstrumentEntity> findByTicker(String figi) {
-        return cache.getAllValues().parallelStream().filter(i -> i.getTicker().equals(figi)).collect(Collectors.toList());
+    public Optional<List<InstrumentEntity>> findByTicker(String figi) {
+        return Optional.ofNullable(cache.getAllValues().get().parallelStream().filter(i -> i.getTicker().equals(figi)).collect(Collectors.toList()));
     }
 
     @Override
@@ -47,12 +48,11 @@ public class CacheInstrumentDaoImpl implements Dao<InstrumentEntity> {
     }
 
     @Override
-    public void update(InstrumentEntity instrumentEntity, String[] params) {
+    public void updatePrice(InstrumentEntity instrumentEntity, BigDecimal price) {
 //        instrumentEntity
     }
 
     /**
-     *
      * @param days
      */
     @Override
@@ -62,7 +62,7 @@ public class CacheInstrumentDaoImpl implements Dao<InstrumentEntity> {
         int thirtyDays = 31;
 
         Stream<InstrumentEntity> instrumentsToEvictStream = cache
-                .getAllValues()
+                .getAllValues().get()
                 .parallelStream()
                 .filter(i -> new DateTime(i.getDate()).isBefore(new DateTime().minusDays(thirtyDays)));
 
@@ -77,27 +77,26 @@ public class CacheInstrumentDaoImpl implements Dao<InstrumentEntity> {
 
     /**
      *
-     * @param <T>
      */
-    public static class CacheManager<T> {
+    public static class CacheManager {
         private static CacheManager instance;
         private static final Object monitor = new Object();
-        private Map<String, T> cache;
+        private Map<String, InstrumentEntity> cache;
 
         private CacheManager() {
             cache = new ConcurrentHashMap<>();
         }
 
-        public void put(String cacheKey, T value) {
+        public void put(String cacheKey, InstrumentEntity value) {
             cache.put(cacheKey, value);
         }
 
-        T get(String cacheKey) {
-            return cache.get(cacheKey);
+        Optional<InstrumentEntity> get(String cacheKey) {
+            return Optional.ofNullable(cache.get(cacheKey));
         }
 
-        Collection<T> getAllValues() {
-            return cache.values();
+        Optional<Collection<InstrumentEntity>> getAllValues() {
+            return Optional.of(cache.values());
         }
 
         void clear(String cacheKey) {

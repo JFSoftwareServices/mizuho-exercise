@@ -12,10 +12,11 @@ import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class CacheInstrumentDaoImplTest {
 
-    private Dao<InstrumentEntity> dao = new CacheInstrumentDaoImpl();
+    private InstrumentDao dao = new CacheInstrumentDaoImpl();
 
     @Test
     final void savingMultipleInstrumentsToTheCache() {
@@ -34,8 +35,8 @@ class CacheInstrumentDaoImplTest {
         secondInstrument.setPrice(new BigDecimal(979.84));
         dao.save(secondInstrument);
 
-        assertEquals(dao.get(firstInstrument.getId()), firstInstrument);
-        assertEquals(dao.get(secondInstrument.getId()), secondInstrument);
+        assertEquals(firstInstrument, dao.get(firstInstrument.getId()).orElseThrow(RuntimeException::new));
+        assertEquals(secondInstrument, dao.get(secondInstrument.getId()).orElseThrow(RuntimeException::new));
     }
 
     @Test
@@ -69,9 +70,9 @@ class CacheInstrumentDaoImplTest {
         dao.save(thirdInstrument);
 
         dao.deleteOlderThanDays(30);
-        assertEquals(firstInstrument, dao.get(firstInstrument.getId()));
-        assertEquals(secondInstrument, dao.get(secondInstrument.getId()));
-        assertNull(dao.get(thirdInstrument.getId()));
+        assertEquals(firstInstrument, dao.get(firstInstrument.getId()).orElseThrow(RuntimeException::new));
+        assertEquals(secondInstrument, dao.get(secondInstrument.getId()).orElseThrow(RuntimeException::new));
+        assertFalse(dao.get(thirdInstrument.getId()).isPresent());
     }
 
     @Test
@@ -97,7 +98,7 @@ class CacheInstrumentDaoImplTest {
         thirdInstrument.setPrice(new BigDecimal(979.84));
         dao.save(thirdInstrument);
 
-        List<InstrumentEntity> instruments = dao.findByTicker("GOOG");
+        List<InstrumentEntity> instruments = dao.findByTicker("GOOG").orElseThrow(RuntimeException::new);
         assertEquals(2, instruments.size());
         assertEquals(firstInstrument, instruments.get(0));
         assertEquals(thirdInstrument, instruments.get(1));
@@ -126,7 +127,7 @@ class CacheInstrumentDaoImplTest {
         thirdInstrument.setPrice(new BigDecimal(979.84));
         dao.save(thirdInstrument);
 
-        List<InstrumentEntity> instruments = dao.findByVendor("CQG");
+        List<InstrumentEntity> instruments = dao.findByVendor("CQG").orElseThrow(RuntimeException::new);
         assertEquals(2, instruments.size());
         assertEquals(firstInstrument, instruments.get(0));
         assertEquals(secondInstrument, instruments.get(1));

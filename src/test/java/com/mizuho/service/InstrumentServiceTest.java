@@ -1,6 +1,6 @@
 package com.mizuho.service;
 
-import com.mizuho.io.dao.Dao;
+import com.mizuho.io.dao.InstrumentDao;
 import com.mizuho.io.entity.InstrumentEntity;
 import com.mizuho.service.impl.InstrumentServiceImpl;
 import com.mizuho.shared.dto.InstrumentDto;
@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -26,7 +27,7 @@ class InstrumentServiceTest {
     InstrumentServiceImpl instrumentService;
 
     @Mock
-    Dao dao;
+    InstrumentDao dao;
 
     private List<InstrumentEntity> entities;
 
@@ -53,7 +54,7 @@ class InstrumentServiceTest {
 
     @Test
     void findInstrumentPricesByInstrumentName() {
-        when(dao.findByTicker((anyString()))).thenReturn(entities);
+        when(dao.findByTicker((anyString()))).thenReturn(Optional.of(entities));
 
         List<InstrumentDto> instrumentRestResponse = instrumentService.findInstrumentPricesByTicker("").orElse(null);
 
@@ -71,9 +72,9 @@ class InstrumentServiceTest {
 
     @Test
     void findInstrumentsByVendor() {
-        when(dao.findByVendor((anyString()))).thenReturn(entities);
+        when(dao.findByVendor((anyString()))).thenReturn(Optional.of(entities));
 
-        List<InstrumentDto> instrumentRestResponse = instrumentService.findInstrumentPricesByVendor("");
+        List<InstrumentDto> instrumentRestResponse = instrumentService.findInstrumentPricesByVendor("").orElse(null);
 
         assertNotNull(instrumentRestResponse);
         assertEquals(2, instrumentRestResponse.size());

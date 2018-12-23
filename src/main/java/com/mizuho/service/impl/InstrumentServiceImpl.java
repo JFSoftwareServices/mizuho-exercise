@@ -1,6 +1,6 @@
 package com.mizuho.service.impl;
 
-import com.mizuho.io.dao.Dao;
+import com.mizuho.io.dao.InstrumentDao;
 import com.mizuho.io.entity.InstrumentEntity;
 import com.mizuho.service.InstrumentService;
 import com.mizuho.shared.dto.InstrumentDto;
@@ -9,31 +9,39 @@ import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class InstrumentServiceImpl implements InstrumentService {
 
-    private final Dao dao;
+    private final InstrumentDao dao;
 
-    public InstrumentServiceImpl(Dao dao) {
+    public InstrumentServiceImpl(InstrumentDao dao) {
         this.dao = dao;
     }
 
+    @Override
     public void saveInstrument(InstrumentEntity instrumentEntity) {
         dao.save(instrumentEntity);
     }
 
-    public List<InstrumentDto> findInstrumentPricesByVendor(String vendor) {
-        List prices = dao.findByVendor(vendor);
+    @Override
+    public void updatePriceOfInstrument(InstrumentEntity instrumentEntity, BigDecimal price) {
+
+    }
+
+    public Optional<List<InstrumentDto>> findInstrumentPricesByVendor(String vendor) {
+        List prices = dao.findByVendor(vendor).orElse(new ArrayList<>());
 
         Type listType = new TypeToken<List<InstrumentDto>>() {
         }.getType();
 
         List<InstrumentDto> returnValues;
         returnValues = new ModelMapper().map(prices, listType);
-        return returnValues;
+        return Optional.of(returnValues);
     }
 
     public void evictStaleInstrumentsOlderThanDays(int daysAgo) {
@@ -42,7 +50,7 @@ public class InstrumentServiceImpl implements InstrumentService {
 
     public Optional<List<InstrumentDto>> findInstrumentPricesByTicker(String ticker) {
 
-        List prices = dao.findByTicker(ticker);
+        List prices = dao.findByTicker(ticker).orElse(new ArrayList<>());
 
         Type listType = new TypeToken<List<InstrumentDto>>() {
         }.getType();

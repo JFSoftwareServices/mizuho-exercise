@@ -36,7 +36,12 @@ public class InstrumentPriceController {
     @GetMapping(value = "/vendor/prices", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
     @ResponseBody
     public InstrumentsRestResponse findInstrumentPricesByVendor(@RequestParam("v") String vendor) {
-        List<InstrumentDto> instruments = instrumentService.findInstrumentPricesByVendor(vendor);
+        List<InstrumentDto> instruments = instrumentService.findInstrumentPricesByVendor(vendor)
+                . orElseThrow(() -> new InstrumentPricesNotFoundException(vendor));
+
+        if (instruments.size() == 0){
+            throw new InstrumentPricesNotFoundException(vendor);
+        }
 
         return instrumentDtosToInstrumentrestResponse(instruments);
     }

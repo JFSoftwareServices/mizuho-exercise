@@ -71,7 +71,7 @@ class InstrumentControllerTest {
 
     @Test
     void findInstrumentPricesForVendor() {
-        when(instrumentService.findInstrumentPricesByVendor(anyString())).thenReturn(instrumentDtoList);
+        when(instrumentService.findInstrumentPricesByVendor(anyString())).thenReturn(Optional.of(instrumentDtoList));
 
         InstrumentsRestResponse instrumentsRestResponse = instrumentPriceController.findInstrumentPricesByVendor("");
 
