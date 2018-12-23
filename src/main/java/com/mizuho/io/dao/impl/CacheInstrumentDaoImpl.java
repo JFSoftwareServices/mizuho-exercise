@@ -1,5 +1,6 @@
-package com.mizuho.io.dao;
+package com.mizuho.io.dao.impl;
 
+import com.mizuho.io.dao.Dao;
 import com.mizuho.io.entity.InstrumentEntity;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -17,7 +18,7 @@ import java.util.stream.Stream;
 import static java.lang.String.valueOf;
 
 @Component
-public class InstrumentDao implements Dao<InstrumentEntity> {
+public class CacheInstrumentDaoImpl implements Dao<InstrumentEntity> {
 
     private CacheManager<InstrumentEntity> cache = new CacheManager<>();
     private AtomicLong id = new AtomicLong();

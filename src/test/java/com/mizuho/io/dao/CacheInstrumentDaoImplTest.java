@@ -1,5 +1,6 @@
 package com.mizuho.io.dao;
 
+import com.mizuho.io.dao.impl.CacheInstrumentDaoImpl;
 import com.mizuho.io.entity.InstrumentEntity;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -12,9 +13,9 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-class InstrumentDaoTest {
+class CacheInstrumentDaoImplTest {
 
-    private Dao<InstrumentEntity> dao = new InstrumentDao();
+    private Dao<InstrumentEntity> dao = new CacheInstrumentDaoImpl();
 
     @Test
     final void savingMultipleInstrumentsToTheCache() {
