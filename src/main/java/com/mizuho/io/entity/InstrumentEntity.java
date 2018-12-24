@@ -1,14 +1,15 @@
 package com.mizuho.io.entity;
 
 import java.math.BigDecimal;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Objects;
 
-public class InstrumentEntity {
-    private Long id;
+public class InstrumentEntity implements Comparable<Date> {
     private BigDecimal price;
     private String ticker;
     private String vendor;
+    private CombinedKey combinedKey;
     private Date date;
 
     public InstrumentEntity() {
@@ -19,14 +20,11 @@ public class InstrumentEntity {
         this.ticker = ticker;
         this.vendor = vendor;
         this.date = date;
+        combinedKey = new CombinedKey(ticker, vendor);
     }
 
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
+    public CombinedKey getCombinedKey() {
+        return combinedKey;
     }
 
     public BigDecimal getPrice() {
@@ -61,6 +59,10 @@ public class InstrumentEntity {
         this.date = date;
     }
 
+    @Override
+    public int compareTo(Date o) {
+        return this.getDate().compareTo(o);
+    }
     /**
      * Indicates whether some other object is "equal to" this one.
      * The other object is considered to be equal to this one if
@@ -95,8 +97,7 @@ public class InstrumentEntity {
     @Override
     public String toString() {
         return "InstrumentEntity{" +
-                "id=" + id +
-                ", price=" + price +
+                "price=" + price +
                 ", ticker='" + ticker + '\'' +
                 ", vendor='" + vendor + '\'' +
                 ", date=" + date +

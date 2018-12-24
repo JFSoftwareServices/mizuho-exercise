@@ -2,15 +2,13 @@ package com.mizuho.io.entity;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class InstrumentEntityTest {
 
@@ -26,7 +24,6 @@ class InstrumentEntityTest {
         assertEquals(goog, goog_1);
     }
 
-
     @Test
     void twoInstrumentsWithDifferentVendorSamePriceAndTicker() {
         InstrumentEntity goog = new InstrumentEntity(new BigDecimal(979.84), "GOOG", "CQG", null);
@@ -39,7 +36,7 @@ class InstrumentEntityTest {
     void twoInstrumentsWithDifferentTickerSamePriceAndVendor() {
         InstrumentEntity vod = new InstrumentEntity(new BigDecimal(156.74), "VOD", "Reuters", null);
         InstrumentEntity goog = new InstrumentEntity(new BigDecimal(979.84), "GOOG", "Bloomberg", null);
-        
+
         assertNotEquals(vod, goog);
     }
 }

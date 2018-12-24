@@ -35,20 +35,12 @@ class InstrumentServiceTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         entities = new ArrayList<>();
-        InstrumentEntity instrumentEntity = new InstrumentEntity();
-        instrumentEntity.setId(10001);
-        instrumentEntity.setDate(new Date());
-        instrumentEntity.setTicker("GOOG");
-        instrumentEntity.setPrice(new BigDecimal(979.84));
-        instrumentEntity.setVendor("CQG");
+        InstrumentEntity instrumentEntity = new InstrumentEntity(
+                new BigDecimal(979.84),"GOOG","CQG", new Date() );
         entities.add(instrumentEntity);
 
-        instrumentEntity = new InstrumentEntity();
-        instrumentEntity.setDate(new Date());
-        instrumentEntity.setTicker("INTC");
-        instrumentEntity.setId(100002);
-        instrumentEntity.setPrice(new BigDecimal(44.84));
-        instrumentEntity.setVendor("Bloomberg");
+        instrumentEntity = new InstrumentEntity(
+                new BigDecimal(44.84),"INTC", "Bloomberg", new Date() );
         entities.add(instrumentEntity);
     }
 

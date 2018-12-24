@@ -40,32 +40,20 @@ class InstrumentControllerIT {
 
     @BeforeEach
     void setUp() {
-        InstrumentEntity firstInstrument = new InstrumentEntity();
-        firstInstrument.setTicker("GOOG");
-        firstInstrument.setDate(new Date());
-        firstInstrument.setVendor("CQG");
-        firstInstrument.setPrice(new BigDecimal(979.84));
+        InstrumentEntity firstInstrument = new InstrumentEntity(
+                new BigDecimal(979.84), "GOOG", "CQG", new Date());
         instrumentService.saveInstrument(firstInstrument);
 
-        InstrumentEntity secondInstrument = new InstrumentEntity();
-        secondInstrument.setTicker("APPL");
-        secondInstrument.setDate(new Date());
-        secondInstrument.setVendor("CQG");
-        secondInstrument.setPrice(new BigDecimal(150.73));
+        InstrumentEntity secondInstrument = new InstrumentEntity(
+                new BigDecimal(150.73), "APPL", "CQG", new Date());
         instrumentService.saveInstrument(secondInstrument);
 
-        InstrumentEntity thirdInstrument = new InstrumentEntity();
-        thirdInstrument.setTicker("GOOG");
-        thirdInstrument.setDate(new Date());
-        thirdInstrument.setVendor("CQG");
-        thirdInstrument.setPrice(new BigDecimal(979.84));
+        InstrumentEntity thirdInstrument = new InstrumentEntity(
+                new BigDecimal(979.84), "GOOG", "CQG", new Date());
         instrumentService.saveInstrument(thirdInstrument);
 
-        InstrumentEntity fourthInstrument = new InstrumentEntity();
-        fourthInstrument.setTicker("GOOG");
-        fourthInstrument.setDate(new Date());
-        fourthInstrument.setVendor("CQG");
-        fourthInstrument.setPrice(new BigDecimal(979.84));
+        InstrumentEntity fourthInstrument = new InstrumentEntity(
+                new BigDecimal(979.84), "GOOG", "CQG", new Date());
         instrumentService.saveInstrument(fourthInstrument);
     }
 
@@ -79,8 +67,7 @@ class InstrumentControllerIT {
                 createURLWithPort("api/vendor/prices?v=CQG"),
                 HttpMethod.GET, entity, String.class);
 
-        String expectedBody = "{instrument:[{ticker:GOOG,vendor:CQG,price:979.84},{ticker:APPL,vendor:CQG,price:150.73}," +
-                "{ticker:GOOG,vendor:CQG,price:979.84},{ticker:GOOG,vendor:CQG,price:979.84}]}";
+        String expectedBody = "{instrument:[{ticker:GOOG,vendor:CQG,price:979.84},{ticker:APPL,vendor:CQG,price:150.73}]}";
         JSONAssert.assertEquals(expectedBody, response.getBody(), false);
     }
 
@@ -95,9 +82,7 @@ class InstrumentControllerIT {
                 HttpMethod.GET, entity, String.class);
 
         String expectedBody = "<instruments><instrument><ticker>GOOG</ticker><vendor>CQG</vendor><price>979.84</price>" +
-                "</instrument><instrument><ticker>APPL</ticker><vendor>CQG</vendor><price>150.73</price></instrument>" +
-                "<instrument><ticker>GOOG</ticker><vendor>CQG</vendor><price>979.84</price></instrument><instrument>" +
-                "<ticker>GOOG</ticker><vendor>CQG</vendor><price>979.84</price></instrument></instruments>";
+                "</instrument><instrument><ticker>APPL</ticker><vendor>CQG</vendor><price>150.73</price></instrument>";
         assertEquals(expectedBody, response.getBody());
     }
 
@@ -111,8 +96,7 @@ class InstrumentControllerIT {
                 createURLWithPort("api/instrument/prices?q=GOOG"),
                 HttpMethod.GET, entity, String.class);
 
-        String expected = "{instrument:[{ticker:GOOG,vendor:CQG,price:979.84},{ticker:GOOG,vendor:CQG,price:979.84}," +
-                "{ticker:GOOG,vendor:CQG,price:979.84}]}";
+        String expected = "{instrument:[{ticker:GOOG,vendor:CQG,price:979.84}]}";
         JSONAssert.assertEquals(expected, response.getBody(), false);
     }
 
