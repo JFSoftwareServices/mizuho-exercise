@@ -79,7 +79,6 @@ class CacheInstrumentDaoImplTest {
         InstrumentEntity thirdInstrument = new InstrumentEntity(
                 new BigDecimal(979.84), "GOOG", "Bloomberg", new Date());
 
-        thirdInstrument.setPrice(new BigDecimal(979.84));
         dao.save(thirdInstrument);
 
         List<InstrumentEntity> instruments = dao.findByTicker("GOOG").orElseThrow(RuntimeException::new);
@@ -105,7 +104,7 @@ class CacheInstrumentDaoImplTest {
 
         List<InstrumentEntity> instruments = dao.findByVendor("CQG").orElseThrow(RuntimeException::new);
 
-        assertEquals(firstInstrument, instruments.get(1));
-        assertEquals(secondInstrument, instruments.get(0));
+        assertEquals(firstInstrument, instruments.get(0));
+        assertEquals(secondInstrument, instruments.get(1));
     }
 }
