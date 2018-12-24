@@ -1,7 +1,6 @@
 package com.mizuho.io.entity;
 
 import java.math.BigDecimal;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.Objects;
 
@@ -63,6 +62,7 @@ public class InstrumentEntity implements Comparable<Date> {
     public int compareTo(Date o) {
         return this.getDate().compareTo(o);
     }
+
     /**
      * Indicates whether some other object is "equal to" this one.
      * The other object is considered to be equal to this one if

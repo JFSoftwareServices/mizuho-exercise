@@ -3,8 +3,7 @@ package com.mizuho.io.entity;
 import java.util.Objects;
 
 /**
- * The key in the cache map will be a combination of ticker and vendor
- * Not sure if this works well and equals method implemented correctly
+ * The key used in the cache will be a combined key consisting  of ticker and vendor
  */
 public class CombinedKey {
     private String ticker;

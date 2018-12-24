@@ -1,6 +1,5 @@
 package com.mizuho.io.dao;
 
-import com.mizuho.io.entity.CombinedKey;
 import com.mizuho.io.entity.InstrumentEntity;
 
 import java.util.List;
