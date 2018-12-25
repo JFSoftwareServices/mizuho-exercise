@@ -30,7 +30,7 @@ public class InstrumentPriceController {
             throw new InstrumentPricesNotFoundException(ticker);
         }
 
-        return instrumentDtosToInstrumentrestResponse(instruments);
+        return instrumentDtosToInstrumentRestResponse(instruments);
     }
 
     @GetMapping(value = "/vendor/prices", produces = {MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE})
@@ -43,10 +43,10 @@ public class InstrumentPriceController {
             throw new InstrumentPricesNotFoundException(vendor);
         }
 
-        return instrumentDtosToInstrumentrestResponse(instruments);
+        return instrumentDtosToInstrumentRestResponse(instruments);
     }
 
-    private InstrumentsRestResponse instrumentDtosToInstrumentrestResponse(List<InstrumentDto> instruments) {
+    private InstrumentsRestResponse instrumentDtosToInstrumentRestResponse(List<InstrumentDto> instruments) {
         InstrumentsRestResponse response = new InstrumentsRestResponse();
 
         for (InstrumentDto instrument : instruments) {

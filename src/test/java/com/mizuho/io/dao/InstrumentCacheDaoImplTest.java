@@ -1,10 +1,9 @@
 package com.mizuho.io.dao;
 
-import com.mizuho.io.dao.impl.CacheInstrumentDaoImpl;
+import com.mizuho.io.dao.impl.InstrumentCacheDaoImpl;
 import com.mizuho.io.entity.InstrumentEntity;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,9 +16,9 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-class CacheInstrumentDaoImplTest {
+class InstrumentCacheDaoImplTest {
 
-    private InstrumentDao dao  = new CacheInstrumentDaoImpl();
+    private InstrumentDao dao  = new InstrumentCacheDaoImpl();
 
     @BeforeEach
     void setUp() {

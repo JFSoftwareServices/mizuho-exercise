@@ -37,7 +37,6 @@ class InstrumentControllerTest {
         InstrumentDto instrumentDto = new InstrumentDto();
         instrumentDto.setDate(new Date());
         instrumentDto.setTicker("GOOG");
-        instrumentDto.setPk(10001);
         instrumentDto.setPrice(new BigDecimal(979.84));
         instrumentDto.setVendor("CQG");
         instrumentDtoList.add(instrumentDto);
@@ -45,7 +44,6 @@ class InstrumentControllerTest {
         instrumentDto = new InstrumentDto();
         instrumentDto.setDate(new Date());
         instrumentDto.setTicker("INTC");
-        instrumentDto.setPk(10002);
         instrumentDto.setPrice(new BigDecimal(44.84));
         instrumentDto.setVendor("Bloomberg");
         instrumentDtoList.add(instrumentDto);

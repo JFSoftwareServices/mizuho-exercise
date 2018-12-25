@@ -1,17 +1,18 @@
 package com.mizuho.shared.dto;
 
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+@JacksonXmlRootElement(localName = "instrument")
 public class InstrumentDto implements Serializable {
-
-    private static final long serialVersionUID = 170541511581065014L;
+    private static final long serialVersionUID = 8503897109288209524L;
     private BigDecimal price;
     private String ticker;
     private String vendor;
     private Date date;
-    private long pk;
 
     public BigDecimal getPrice() {
         return price;
@@ -45,11 +46,13 @@ public class InstrumentDto implements Serializable {
         this.date = date;
     }
 
-    public long getPk() {
-        return pk;
-    }
-
-    public void setPk(long pk) {
-        this.pk = pk;
+    @Override
+    public String toString() {
+        return "InstrumentDto{" +
+                "price=" + price +
+                ", ticker='" + ticker + '\'' +
+                ", vendor='" + vendor + '\'' +
+                ", date=" + date +
+                '}';
     }
 }

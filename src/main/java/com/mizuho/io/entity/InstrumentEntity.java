@@ -1,14 +1,15 @@
 package com.mizuho.io.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
-public class InstrumentEntity implements Comparable<Date> {
+public class InstrumentEntity implements Comparable<Date>{
     private BigDecimal price;
     private String ticker;
     private String vendor;
-    private CombinedKey combinedKey;
+    private CombinedKey combinedKey = new CombinedKey();
     private Date date;
 
     public InstrumentEntity() {
@@ -40,6 +41,28 @@ public class InstrumentEntity implements Comparable<Date> {
 
     public Date getDate() {
         return date;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public void setTicker(String ticker) {
+        combinedKey.setTicker(ticker);
+        this.ticker = ticker;
+    }
+
+    public void setVendor(String vendor) {
+        combinedKey.setVendor(vendor);
+        this.vendor = vendor;
+    }
+
+    public void setCombinedKey(CombinedKey combinedKey) {
+        this.combinedKey = combinedKey;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Override

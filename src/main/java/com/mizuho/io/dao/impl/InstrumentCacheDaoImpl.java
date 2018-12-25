@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Component
-public class CacheInstrumentDaoImpl implements InstrumentDao {
+public class InstrumentCacheDaoImpl implements InstrumentDao {
 
     private InstrumentCacheManager cacheManager = InstrumentCacheManager.getInstance();
 

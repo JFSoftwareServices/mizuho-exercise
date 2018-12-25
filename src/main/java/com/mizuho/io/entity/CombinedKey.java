@@ -9,6 +9,9 @@ public class CombinedKey {
     private String ticker;
     private String vendor;
 
+    public CombinedKey() {
+    }
+
     CombinedKey(String ticker, String vendor) {
         this.ticker = ticker;
         this.vendor = vendor;
@@ -20,6 +23,14 @@ public class CombinedKey {
 
     public String getVendor() {
         return vendor;
+    }
+
+    public void setTicker(String ticker) {
+        this.ticker = ticker;
+    }
+
+    public void setVendor(String vendor) {
+        this.vendor = vendor;
     }
 
     @Override
