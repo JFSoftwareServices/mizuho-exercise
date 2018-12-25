@@ -1,33 +1,21 @@
 package com.mizuho.route;
 
-import com.mizuho.io.entity.InstrumentEntity;
 import com.mizuho.service.InstrumentService;
-import com.mizuho.shared.dto.InstrumentDto;
-import org.apache.camel.*;
-import org.apache.camel.builder.AdviceWithRouteBuilder;
+import org.apache.camel.CamelContext;
+import org.apache.camel.Produce;
+import org.apache.camel.ProducerTemplate;
 import org.apache.camel.builder.NotifyBuilder;
 import org.apache.camel.test.spring.CamelSpringBootRunner;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
 import static org.hamcrest.core.Is.is;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.function.Supplier;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * The properties from main/resources will be loaded if no application.prop in test.

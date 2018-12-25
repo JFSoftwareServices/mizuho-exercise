@@ -2,7 +2,6 @@ package com.mizuho.route;
 
 import com.mizuho.io.entity.InstrumentEntity;
 import com.mizuho.service.InstrumentService;
-import com.mizuho.shared.dto.InstrumentDto;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 

@@ -9,7 +9,6 @@ import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,11 +25,6 @@ public class InstrumentServiceImpl implements InstrumentService {
     @Override
     public void saveInstrument(InstrumentEntity instrumentEntity) {
         dao.save(instrumentEntity);
-    }
-
-    @Override
-    public void updatePriceOfInstrument(InstrumentEntity instrumentEntity, BigDecimal price) {
-
     }
 
     public Optional<List<InstrumentDto>> findInstrumentPricesByVendor(String vendor) {
