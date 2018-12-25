@@ -6,6 +6,7 @@ import com.mizuho.service.InstrumentService;
 import com.mizuho.shared.dto.InstrumentDto;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
@@ -23,7 +24,9 @@ public class InstrumentServiceImpl implements InstrumentService {
     }
 
     @Override
-    public void saveInstrument(InstrumentEntity instrumentEntity) {
+    public void saveInstrument(InstrumentDto instrumentDto) {
+        InstrumentEntity instrumentEntity = new InstrumentEntity();
+        BeanUtils.copyProperties(instrumentDto, instrumentEntity);
         dao.save(instrumentEntity);
     }
 

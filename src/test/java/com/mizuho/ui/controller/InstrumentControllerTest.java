@@ -34,18 +34,12 @@ class InstrumentControllerTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         instrumentDtoList = new ArrayList<>();
-        InstrumentDto instrumentDto = new InstrumentDto();
-        instrumentDto.setDate(new Date());
-        instrumentDto.setTicker("GOOG");
-        instrumentDto.setPrice(new BigDecimal(979.84));
-        instrumentDto.setVendor("CQG");
+        InstrumentDto instrumentDto = new InstrumentDto(new BigDecimal(979.84),
+                "GOOG", "CQG", new Date());
         instrumentDtoList.add(instrumentDto);
 
-        instrumentDto = new InstrumentDto();
-        instrumentDto.setDate(new Date());
-        instrumentDto.setTicker("INTC");
-        instrumentDto.setPrice(new BigDecimal(44.84));
-        instrumentDto.setVendor("Bloomberg");
+        instrumentDto = new InstrumentDto(new BigDecimal(44.84),
+                "INTC", "Bloomberg", new Date());
         instrumentDtoList.add(instrumentDto);
     }
 

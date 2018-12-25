@@ -1,8 +1,8 @@
 package com.mizuho.ui.controller;
 
 import com.mizuho.PriceApplication;
-import com.mizuho.io.entity.InstrumentEntity;
 import com.mizuho.service.InstrumentService;
+import com.mizuho.shared.dto.InstrumentDto;
 import org.json.JSONException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,19 +40,19 @@ class InstrumentControllerIT {
 
     @BeforeEach
     void setUp() {
-        InstrumentEntity firstInstrument = new InstrumentEntity(
+        InstrumentDto firstInstrument = new InstrumentDto(
                 new BigDecimal(979.84), "GOOG", "CQG", new Date());
         instrumentService.saveInstrument(firstInstrument);
 
-        InstrumentEntity secondInstrument = new InstrumentEntity(
+        InstrumentDto secondInstrument = new InstrumentDto(
                 new BigDecimal(150.73), "APPL", "CQG", new Date());
         instrumentService.saveInstrument(secondInstrument);
 
-        InstrumentEntity thirdInstrument = new InstrumentEntity(
+        InstrumentDto thirdInstrument = new InstrumentDto(
                 new BigDecimal(979.84), "GOOG", "CQG", new Date());
         instrumentService.saveInstrument(thirdInstrument);
 
-        InstrumentEntity fourthInstrument = new InstrumentEntity(
+        InstrumentDto fourthInstrument = new InstrumentDto(
                 new BigDecimal(979.84), "GOOG", "CQG", new Date());
         instrumentService.saveInstrument(fourthInstrument);
     }

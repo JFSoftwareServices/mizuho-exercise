@@ -1,10 +1,11 @@
 package com.mizuho.io.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
-public class InstrumentEntity implements Comparable<Date>{
+public class InstrumentEntity implements Comparable<Date>, Serializable {
     private BigDecimal price;
     private String ticker;
     private String vendor;

@@ -1,6 +1,5 @@
 package com.mizuho.service;
 
-import com.mizuho.io.entity.InstrumentEntity;
 import com.mizuho.shared.dto.InstrumentDto;
 
 import java.util.List;
@@ -10,7 +9,7 @@ public interface InstrumentService {
 
     Optional<List<InstrumentDto>> findInstrumentPricesByTicker(String ticker);
 
-    void saveInstrument(InstrumentEntity instrumentEntity);
+    void saveInstrument(InstrumentDto instrumentDto);
 
     void evictStaleInstrumentsOlderThanDays(int daysAgo);
 

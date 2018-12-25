@@ -1,11 +1,12 @@
 package com.mizuho.io.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * The key used in the cache will be a combined key consisting  of ticker and vendor
  */
-public class CombinedKey {
+public class CombinedKey implements Serializable {
     private String ticker;
     private String vendor;
 

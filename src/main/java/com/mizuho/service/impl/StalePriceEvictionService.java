@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
+
 @Component
 public class StalePriceEvictionService {
 
@@ -20,11 +22,10 @@ public class StalePriceEvictionService {
         this.instrumentService = instrumentService;
     }
 
-//    @Scheduled(cron = "0/20 * * * * ?")
-    @Scheduled(cron = "0 0 06 * * ?")
+    @Scheduled(cron = "0 0 12 * * ?")
     public void startService() {
-        logger.info("Stale instrument price eviction commencing");
+        logger.info("Stale instrument price eviction commencing: " + new Date());
         instrumentService.evictStaleInstrumentsOlderThanDays(daysAgo);
-        logger.info("Stale instrument Price eviction finished");
+        logger.info("Stale instrument Price eviction finished: "+ new Date());
     }
 }
