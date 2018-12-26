@@ -36,11 +36,11 @@ class InstrumentServiceTest {
         MockitoAnnotations.initMocks(this);
         entities = new ArrayList<>();
         InstrumentEntity instrumentEntity = new InstrumentEntity(
-                new BigDecimal(979.84),"GOOG","CQG", new Date() );
+                new BigDecimal("979.84"),"GOOG","CQG", new Date() );
         entities.add(instrumentEntity);
 
         instrumentEntity = new InstrumentEntity(
-                new BigDecimal(44.84),"INTC", "Bloomberg", new Date() );
+                new BigDecimal("44.84"),"INTC", "Bloomberg", new Date() );
         entities.add(instrumentEntity);
     }
 
@@ -55,11 +55,11 @@ class InstrumentServiceTest {
 
         assertEquals("GOOG", instrumentRestResponse.get(0).getTicker());
         assertEquals( "CQG", instrumentRestResponse.get(0).getVendor());
-        assertEquals(new BigDecimal(979.84), instrumentRestResponse.get(0).getPrice());
+        assertEquals(new BigDecimal("979.84"), instrumentRestResponse.get(0).getPrice());
 
         assertEquals("INTC", instrumentRestResponse.get(1).getTicker());
         assertEquals("Bloomberg", instrumentRestResponse.get(1).getVendor());
-        assertEquals(new BigDecimal(44.84), instrumentRestResponse.get(1).getPrice());
+        assertEquals(new BigDecimal("44.84"), instrumentRestResponse.get(1).getPrice());
     }
 
     @Test
@@ -73,10 +73,10 @@ class InstrumentServiceTest {
 
         assertEquals("GOOG", instrumentRestResponse.get(0).getTicker());
         assertEquals("CQG", instrumentRestResponse.get(0).getVendor());
-        assertEquals(new BigDecimal(979.84), instrumentRestResponse.get(0).getPrice());
+        assertEquals(new BigDecimal("979.84"), instrumentRestResponse.get(0).getPrice());
 
         assertEquals("INTC", instrumentRestResponse.get(1).getTicker());
         assertEquals("Bloomberg", instrumentRestResponse.get(1).getVendor());
-        assertEquals(new BigDecimal(44.84), instrumentRestResponse.get(1).getPrice());
+        assertEquals(new BigDecimal("44.84"), instrumentRestResponse.get(1).getPrice());
     }
 }

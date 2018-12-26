@@ -1,6 +1,7 @@
 package com.mizuho.ui.controller;
 
 import com.mizuho.PriceApplication;
+import com.mizuho.io.dao.impl.InstrumentCacheManager;
 import com.mizuho.service.InstrumentService;
 import com.mizuho.shared.dto.InstrumentDto;
 import org.json.JSONException;
@@ -39,22 +40,27 @@ class InstrumentControllerIT {
     }
 
     @BeforeEach
-    void setUp() {
+    void setUpInstruments() {
         InstrumentDto firstInstrument = new InstrumentDto(
-                new BigDecimal(979.84), "GOOG", "CQG", new Date());
+                new BigDecimal("979.84"), "GOOG", "CQG", new Date());
         instrumentService.saveInstrument(firstInstrument);
 
         InstrumentDto secondInstrument = new InstrumentDto(
-                new BigDecimal(150.73), "APPL", "CQG", new Date());
+                new BigDecimal("150.73"), "APPL", "CQG", new Date());
         instrumentService.saveInstrument(secondInstrument);
 
         InstrumentDto thirdInstrument = new InstrumentDto(
-                new BigDecimal(979.84), "GOOG", "CQG", new Date());
+                new BigDecimal("979.84"), "GOOG", "CQG", new Date());
         instrumentService.saveInstrument(thirdInstrument);
 
         InstrumentDto fourthInstrument = new InstrumentDto(
-                new BigDecimal(979.84), "GOOG", "CQG", new Date());
+                new BigDecimal("979.84"), "GOOG", "CQG", new Date());
         instrumentService.saveInstrument(fourthInstrument);
+    }
+
+    @BeforeEach
+    void clearCache(){
+        InstrumentCacheManager.getInstance().clearAllInstruments();
     }
 
     @Test
@@ -81,8 +87,9 @@ class InstrumentControllerIT {
                 createURLWithPort("api/vendor/prices?v=CQG"),
                 HttpMethod.GET, entity, String.class);
 
-        String expectedBody = "<instruments><instrument><ticker>GOOG</ticker><vendor>CQG</vendor><price>979.84</price>" +
-                "</instrument><instrument><ticker>APPL</ticker><vendor>CQG</vendor><price>150.73</price></instrument>";
+        String expectedBody = "<instruments><instrument><ticker>GOOG</ticker><vendor>CQG</vendor>" +
+                "<price>979.84</price></instrument><instrument><ticker>APPL</ticker><vendor>CQG</vendor>" +
+                "<price>150.73</price></instrument></instruments>";
         assertEquals(expectedBody, response.getBody());
     }
 

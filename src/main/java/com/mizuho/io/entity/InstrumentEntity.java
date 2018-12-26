@@ -5,11 +5,11 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
-public class InstrumentEntity implements Comparable<Date>, Serializable {
+public class InstrumentEntity implements Serializable {
     private BigDecimal price;
     private String ticker;
     private String vendor;
-    private CombinedKey combinedKey = new CombinedKey();
+    private CompositeKeyPair compositeKeyPair = new CompositeKeyPair(ticker, vendor);
     private Date date;
 
     public InstrumentEntity() {
@@ -20,11 +20,11 @@ public class InstrumentEntity implements Comparable<Date>, Serializable {
         this.ticker = ticker;
         this.vendor = vendor;
         this.date = date;
-        combinedKey = new CombinedKey(ticker, vendor);
+        compositeKeyPair = new CompositeKeyPair(ticker, vendor);
     }
 
-    public CombinedKey getCombinedKey() {
-        return combinedKey;
+    public CompositeKeyPair getCompositeKeyPair() {
+        return compositeKeyPair;
     }
 
     public BigDecimal getPrice() {
@@ -48,26 +48,21 @@ public class InstrumentEntity implements Comparable<Date>, Serializable {
     }
 
     public void setTicker(String ticker) {
-        combinedKey.setTicker(ticker);
+        compositeKeyPair.setTicker(ticker);
         this.ticker = ticker;
     }
 
     public void setVendor(String vendor) {
-        combinedKey.setVendor(vendor);
+        compositeKeyPair.setVendor(vendor);
         this.vendor = vendor;
     }
 
-    public void setCombinedKey(CombinedKey combinedKey) {
-        this.combinedKey = combinedKey;
+    public void setCompositeKeyPair(CompositeKeyPair compositeKeyPair) {
+        this.compositeKeyPair = compositeKeyPair;
     }
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    @Override
-    public int compareTo(Date o) {
-        return this.getDate().compareTo(o);
     }
 
     /**

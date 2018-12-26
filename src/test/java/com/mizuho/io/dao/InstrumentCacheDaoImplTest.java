@@ -25,11 +25,11 @@ class InstrumentCacheDaoImplTest {
     @Test
     final void savingMultipleInstrumentsToTheCache() {
         InstrumentEntity firstInstrument = new InstrumentEntity(
-                new BigDecimal(44.84), "INTC", "CQG", new Date());
+                new BigDecimal("44.84"), "INTC", "CQG", new Date());
         dao.save(firstInstrument);
 
         InstrumentEntity secondInstrument = new InstrumentEntity(
-                new BigDecimal(979.84), "GOOG", "Bloomberg", new Date());
+                new BigDecimal("979.84"), "GOOG", "Bloomberg", new Date());
         dao.save(secondInstrument);
 
         assertEquals(firstInstrument, dao.get(firstInstrument).orElse(null));
@@ -45,16 +45,16 @@ class InstrumentCacheDaoImplTest {
         Date thirtyDays = dateTime.minusDays(30).toDate();
         Date thirtyOneDays = dateTime.minusDays(31).toDate();
 
-        InstrumentEntity firstInstrument = new InstrumentEntity(new BigDecimal(98.23), "MSFT", "CQG", twentyEightDays);
+        InstrumentEntity firstInstrument = new InstrumentEntity(new BigDecimal("98.23"), "MSFT", "CQG", twentyEightDays);
         dao.save(firstInstrument);
 
-        InstrumentEntity secondInstrument = new InstrumentEntity(new BigDecimal(98.23), "MSFT", "CQG", twentyNineDays);
+        InstrumentEntity secondInstrument = new InstrumentEntity(new BigDecimal("98.23"), "MSFT", "CQG", twentyNineDays);
         dao.save(secondInstrument);
 
-        InstrumentEntity thirdInstrument = new InstrumentEntity(new BigDecimal(979.84), "GOOG", "Bloomberg", thirtyDays);
+        InstrumentEntity thirdInstrument = new InstrumentEntity(new BigDecimal("979.84"), "GOOG", "Bloomberg", thirtyDays);
         dao.save(thirdInstrument);
 
-        InstrumentEntity fourthInstrument = new InstrumentEntity(new BigDecimal(98.23), "GOOG", "Bloomberg", thirtyOneDays);
+        InstrumentEntity fourthInstrument = new InstrumentEntity(new BigDecimal("98.23"), "GOOG", "Bloomberg", thirtyOneDays);
         dao.save(fourthInstrument);
 
         dao.deleteOlderThanDays(30);
@@ -65,42 +65,42 @@ class InstrumentCacheDaoImplTest {
     @Test
     final void findInstrumentsByTicker() {
         InstrumentEntity firstInstrument = new InstrumentEntity(
-                new BigDecimal(979.84), "GOOG", "CQG", new Date());
+                new BigDecimal("979.84"), "GOOG", "CQG", new Date());
         dao.save(firstInstrument);
 
         InstrumentEntity secondInstrument = new InstrumentEntity(
-                new BigDecimal(44.84), "INTC", "CQG", new Date());
+                new BigDecimal("44.84"), "INTC", "CQG", new Date());
         dao.save(secondInstrument);
 
         InstrumentEntity thirdInstrument = new InstrumentEntity(
-                new BigDecimal(979.84), "GOOG", "Bloomberg", new Date());
+                new BigDecimal("979.84"), "GOOG", "Bloomberg", new Date());
 
         dao.save(thirdInstrument);
 
         List<InstrumentEntity> instruments = dao.findByTicker("GOOG").orElseThrow(RuntimeException::new);
         assertEquals(2, instruments.size());
 
-        assertEquals(firstInstrument, instruments.get(0));
-        assertEquals(thirdInstrument, instruments.get(1));
+        assertEquals(thirdInstrument, instruments.get(0));
+        assertEquals(firstInstrument, instruments.get(1));
     }
 
     @Test
     final void findInstrumentsByVendor() {
         InstrumentEntity firstInstrument = new InstrumentEntity(
-                new BigDecimal(979.84), "GOOG", "CQG", new Date());
+                new BigDecimal("979.84"), "GOOG", "CQG", new Date());
         dao.save(firstInstrument);
 
         InstrumentEntity secondInstrument = new InstrumentEntity(
-                new BigDecimal(172.29), "AAPL", "CQG", new Date());
+                new BigDecimal("172.29"), "AAPL", "CQG", new Date());
         dao.save(secondInstrument);
 
         InstrumentEntity thirdInstrument = new InstrumentEntity(
-                new BigDecimal(979.84), "GOOG", "Bloomberg", new Date());
+                new BigDecimal("979.84"), "GOOG", "Bloomberg", new Date());
         dao.save(thirdInstrument);
 
         List<InstrumentEntity> instruments = dao.findByVendor("CQG").orElseThrow(RuntimeException::new);
 
-        assertEquals(firstInstrument, instruments.get(0));
-        assertEquals(secondInstrument, instruments.get(1));
+        assertEquals(secondInstrument, instruments.get(0));
+        assertEquals(firstInstrument, instruments.get(1));
     }
 }

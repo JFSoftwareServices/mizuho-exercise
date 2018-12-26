@@ -34,11 +34,11 @@ class InstrumentControllerTest {
     void setUp() {
         MockitoAnnotations.initMocks(this);
         instrumentDtoList = new ArrayList<>();
-        InstrumentDto instrumentDto = new InstrumentDto(new BigDecimal(979.84),
+        InstrumentDto instrumentDto = new InstrumentDto(new BigDecimal("979.84"),
                 "GOOG", "CQG", new Date());
         instrumentDtoList.add(instrumentDto);
 
-        instrumentDto = new InstrumentDto(new BigDecimal(44.84),
+        instrumentDto = new InstrumentDto(new BigDecimal("44.84"),
                 "INTC", "Bloomberg", new Date());
         instrumentDtoList.add(instrumentDto);
     }
@@ -54,11 +54,11 @@ class InstrumentControllerTest {
 
         assertEquals("GOOG", instrumentsRestResponse.getResponseLines().get(0).getTicker());
         assertEquals("CQG", instrumentsRestResponse.getResponseLines().get(0).getVendor());
-        assertEquals(new BigDecimal(979.84), instrumentsRestResponse.getResponseLines().get(0).getPrice());
+        assertEquals(new BigDecimal("979.84"), instrumentsRestResponse.getResponseLines().get(0).getPrice());
 
         assertEquals("INTC", instrumentsRestResponse.getResponseLines().get(1).getTicker());
         assertEquals("Bloomberg", instrumentsRestResponse.getResponseLines().get(1).getVendor());
-        assertEquals(new BigDecimal(44.84), instrumentsRestResponse.getResponseLines().get(1).getPrice());
+        assertEquals(new BigDecimal("44.84"), instrumentsRestResponse.getResponseLines().get(1).getPrice());
     }
 
     @Test
@@ -72,10 +72,10 @@ class InstrumentControllerTest {
 
         assertEquals("GOOG", instrumentsRestResponse.getResponseLines().get(0).getTicker());
         assertEquals("CQG", instrumentsRestResponse.getResponseLines().get(0).getVendor());
-        assertEquals(new BigDecimal(979.84), instrumentsRestResponse.getResponseLines().get(0).getPrice());
+        assertEquals(new BigDecimal("979.84"), instrumentsRestResponse.getResponseLines().get(0).getPrice());
 
         assertEquals("INTC", instrumentsRestResponse.getResponseLines().get(1).getTicker());
         assertEquals("Bloomberg", instrumentsRestResponse.getResponseLines().get(1).getVendor());
-        assertEquals(new BigDecimal(44.84), instrumentsRestResponse.getResponseLines().get(1).getPrice());
+        assertEquals(new BigDecimal("44.84"), instrumentsRestResponse.getResponseLines().get(1).getPrice());
     }
 }

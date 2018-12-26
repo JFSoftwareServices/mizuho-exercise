@@ -23,7 +23,7 @@ class InstrumentCacheManagerTest {
 
     @Test
     void addInstrumentToCache() {
-        InstrumentEntity entity = new InstrumentEntity(new BigDecimal(44.84), "INTC", "CQG", new Date());
+        InstrumentEntity entity = new InstrumentEntity(new BigDecimal("44.84"), "INTC", "CQG", new Date());
         cacheManager.putInstrument(entity);
 
         assertEquals(Optional.of(entity), InstrumentCacheManager
@@ -33,10 +33,10 @@ class InstrumentCacheManagerTest {
 
     @Test
     void updateExistingInstrument() {
-        InstrumentEntity entity = new InstrumentEntity(new BigDecimal(44.84), "INTC", "CQG", new Date());
+        InstrumentEntity entity = new InstrumentEntity(new BigDecimal("44.84"), "INTC", "CQG", new Date());
         cacheManager.putInstrument(entity);
 
-        entity = new InstrumentEntity(new BigDecimal(44.85), "INTC", "CQG", new Date());
+        entity = new InstrumentEntity(new BigDecimal("44.85"), "INTC", "CQG", new Date());
         InstrumentCacheManager.getInstance().putInstrument(entity);
 
         assertEquals(Optional.of(entity), InstrumentCacheManager
@@ -46,7 +46,7 @@ class InstrumentCacheManagerTest {
 
     @Test
     void removeInstrumentFromCache() {
-        InstrumentEntity entity = new InstrumentEntity(new BigDecimal(44.84), "INTC", "CQG", new Date());
+        InstrumentEntity entity = new InstrumentEntity(new BigDecimal("44.84"), "INTC", "CQG", new Date());
         cacheManager.putInstrument(entity);
 
         assertEquals(entity, InstrumentCacheManager
@@ -75,14 +75,14 @@ class InstrumentCacheManagerTest {
     void getAllInstrumentFromCache() {
         List<InstrumentEntity> entities = new ArrayList<>();
 
-        InstrumentEntity entity = new InstrumentEntity(new BigDecimal(44.84), "INTC", "CQG", new Date());
+        InstrumentEntity entity = new InstrumentEntity(new BigDecimal("44.84"), "INTC", "CQG", new Date());
         cacheManager.putInstrument(entity);
 
-        entity = new InstrumentEntity(new BigDecimal(44.85), "INTC", "CQG", new Date());
+        entity = new InstrumentEntity(new BigDecimal("44.85"), "INTC", "CQG", new Date());
         entities.add(entity);
         InstrumentCacheManager.getInstance().putInstrument(entity);
 
-        entity = new InstrumentEntity(new BigDecimal(44.85), "INTC", "Bloomberg", new Date());
+        entity = new InstrumentEntity(new BigDecimal("44.85"), "INTC", "Bloomberg", new Date());
         entities.add(entity);
         InstrumentCacheManager.getInstance().putInstrument(entity);
 

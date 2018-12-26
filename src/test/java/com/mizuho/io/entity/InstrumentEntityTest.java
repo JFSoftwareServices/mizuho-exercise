@@ -18,24 +18,24 @@ class InstrumentEntityTest {
         DateTime dateTime = new DateTime(new Date(), timeZone);
         DateTime yesterday = dateTime.minusDays(1);
 
-        InstrumentEntity goog = new InstrumentEntity(new BigDecimal(979.84), "GOOG", "CQG", new Date());
-        InstrumentEntity goog_1 = new InstrumentEntity(new BigDecimal(979.84), "GOOG", "CQG", yesterday.toDate());
+        InstrumentEntity goog = new InstrumentEntity(new BigDecimal("979.84"), "GOOG", "CQG", new Date());
+        InstrumentEntity goog_1 = new InstrumentEntity(new BigDecimal("979.84"), "GOOG", "CQG", yesterday.toDate());
 
         assertEquals(goog, goog_1);
     }
 
     @Test
     void twoInstrumentsWithDifferentVendorSamePriceAndTicker() {
-        InstrumentEntity goog = new InstrumentEntity(new BigDecimal(979.84), "GOOG", "CQG", null);
-        InstrumentEntity goog_1 = new InstrumentEntity(new BigDecimal(979.84), "GOOG", "Bloomberg", null);
+        InstrumentEntity goog = new InstrumentEntity(new BigDecimal("979.84"), "GOOG", "CQG", null);
+        InstrumentEntity goog_1 = new InstrumentEntity(new BigDecimal("979.84"), "GOOG", "Bloomberg", null);
 
         assertNotEquals(goog, goog_1);
     }
 
     @Test
     void twoInstrumentsWithDifferentTickerSamePriceAndVendor() {
-        InstrumentEntity vod = new InstrumentEntity(new BigDecimal(156.74), "VOD", "Reuters", null);
-        InstrumentEntity goog = new InstrumentEntity(new BigDecimal(979.84), "GOOG", "Bloomberg", null);
+        InstrumentEntity vod = new InstrumentEntity(new BigDecimal("156.74"), "VOD", "Reuters", null);
+        InstrumentEntity goog = new InstrumentEntity(new BigDecimal("979.84"), "GOOG", "Bloomberg", null);
 
         assertNotEquals(vod, goog);
     }

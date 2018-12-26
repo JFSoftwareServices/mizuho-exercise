@@ -1,6 +1,6 @@
 package com.mizuho.io.dao.impl;
 
-import com.mizuho.io.entity.CombinedKey;
+import com.mizuho.io.entity.CompositeKeyPair;
 import com.mizuho.io.entity.InstrumentEntity;
 import org.joda.time.DateTime;
 
@@ -10,15 +10,12 @@ import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
-import static java.util.Comparator.comparing;
-
 /**
  * A thread safe singleton Instrument Cache that uses an memory concurrent map
  */
-//TODO - Add the instrument eviction functionality to this class. At the minute the functionality resides in a route
-class InstrumentCacheManager {
+public class InstrumentCacheManager {
     private static InstrumentCacheManager instance;
-    private ConcurrentHashMap<CombinedKey, InstrumentEntity> cache = new ConcurrentHashMap<>();
+    private ConcurrentHashMap<CompositeKeyPair, InstrumentEntity> cache = new ConcurrentHashMap<>();
 
     private InstrumentCacheManager() {
     }
@@ -40,12 +37,12 @@ class InstrumentCacheManager {
      * ticker and vendor as the one being added
      */
     void putInstrument(InstrumentEntity entity) {
-        cache.putIfAbsent(entity.getCombinedKey(), entity);
-        cache.computeIfPresent(entity.getCombinedKey(), (k, v) -> entity);
+        cache.putIfAbsent(entity.getCompositeKeyPair(), entity);
+        cache.computeIfPresent(entity.getCompositeKeyPair(), (k, v) -> entity);
     }
 
-    Optional<InstrumentEntity> getInstrument(InstrumentEntity entity) {
-        return Optional.ofNullable(cache.get(entity.getCombinedKey()));
+    public Optional<InstrumentEntity> getInstrument(InstrumentEntity entity) {
+        return Optional.ofNullable(cache.get(entity.getCompositeKeyPair()));
     }
 
     Optional<List<InstrumentEntity>> getAllInstrument() {
@@ -53,7 +50,7 @@ class InstrumentCacheManager {
     }
 
     void clearInstrument(InstrumentEntity entity) {
-        cache.remove(entity.getCombinedKey());
+        cache.remove(entity.getCompositeKeyPair());
     }
 
     /**
@@ -66,7 +63,6 @@ class InstrumentCacheManager {
                         .orElse(null))
                         .parallelStream()
                         .filter(i -> i.getVendor().equals(vendor))
-                        .sorted(comparing(InstrumentEntity::getDate))
                         .collect(Collectors.toList())
         );
     }
@@ -81,7 +77,6 @@ class InstrumentCacheManager {
                         .orElse(null))
                         .parallelStream()
                         .filter(i -> i.getTicker().equals(ticker))
-                        .sorted(comparing(InstrumentEntity::getDate))
                         .collect(Collectors.toList()));
     }
 
@@ -103,7 +98,7 @@ class InstrumentCacheManager {
         }
     }
 
-    void clearAllInstruments() {
+    public void clearAllInstruments() {
         cache.clear();
     }
 }
