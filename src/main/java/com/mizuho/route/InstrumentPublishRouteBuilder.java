@@ -23,7 +23,6 @@ public class InstrumentPublishRouteBuilder extends RouteBuilder {
 
         from("{{instruments.prices.in}}")
                 .transacted()
-                .id("instrumentStoreRouteBuilder")
                 .log("In coming message from {{instruments.prices.in}} is ${body}")
                 .log("Unmarshalling incoming message to InstrumentDto")
                 .unmarshal().jacksonxml(InstrumentDto.class)
