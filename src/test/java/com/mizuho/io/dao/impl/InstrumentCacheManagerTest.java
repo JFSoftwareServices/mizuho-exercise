@@ -86,8 +86,9 @@ class InstrumentCacheManagerTest {
         entities.add(entity);
         InstrumentCacheManager.getInstance().putInstrument(entity);
 
-        assertEquals(Optional.of(entities), InstrumentCacheManager
+        Optional<List<InstrumentEntity>> kanke = InstrumentCacheManager
                 .getInstance()
-                .getAllInstrument());
+                .getAllInstrument();
+        assertEquals(Optional.of(entities), kanke);
     }
 }

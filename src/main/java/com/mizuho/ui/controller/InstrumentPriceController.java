@@ -26,10 +26,6 @@ public class InstrumentPriceController {
         List<InstrumentDto> instruments = instrumentService.findInstrumentPricesByTicker(ticker)
                 . orElseThrow(() -> new InstrumentPricesNotFoundException(ticker));
 
-        if (instruments.size() == 0){
-            throw new InstrumentPricesNotFoundException(ticker);
-        }
-
         return instrumentDtosToInstrumentRestResponse(instruments);
     }
 
@@ -39,24 +35,16 @@ public class InstrumentPriceController {
         List<InstrumentDto> instruments = instrumentService.findInstrumentPricesByVendor(vendor)
                 . orElseThrow(() -> new InstrumentPricesNotFoundException(vendor));
 
-        if (instruments.size() == 0){
-            throw new InstrumentPricesNotFoundException(vendor);
-        }
-
         return instrumentDtosToInstrumentRestResponse(instruments);
     }
 
     private InstrumentsRestResponse instrumentDtosToInstrumentRestResponse(List<InstrumentDto> instruments) {
         InstrumentsRestResponse response = new InstrumentsRestResponse();
 
-        for (InstrumentDto instrument : instruments) {
-            InstrumentResponseLine instrumentResponseLine = new InstrumentResponseLine(
-                    instrument.getTicker(),
-                    instrument.getVendor(),
-                    instrument.getPrice());
-
-            response.add(instrumentResponseLine);
-        }
+        instruments.stream().map(instrument -> new InstrumentResponseLine(
+                instrument.getTicker(),
+                instrument.getVendor(),
+                instrument.getPrice())).forEach(response::add);
         return response;
     }
 }

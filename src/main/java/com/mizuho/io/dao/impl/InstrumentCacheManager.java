@@ -93,9 +93,7 @@ public class InstrumentCacheManager {
                                         .minusDays(days)))
                         .collect(Collectors.toList());
 
-        for (InstrumentEntity entity : instruments) {
-            clearInstrument(entity);
-        }
+        instruments.forEach(this::clearInstrument);
     }
 
     public void clearAllInstruments() {
