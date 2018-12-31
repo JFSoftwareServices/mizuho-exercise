@@ -1,10 +1,17 @@
 package com.mizuho.io.entity;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
+@Getter
+@Setter
+@NoArgsConstructor
 public class InstrumentEntity implements Serializable {
     private BigDecimal price;
     private String ticker;
@@ -12,57 +19,12 @@ public class InstrumentEntity implements Serializable {
     private CompositeKeyPair compositeKeyPair = new CompositeKeyPair(ticker, vendor);
     private Date date;
 
-    public InstrumentEntity() {
-    }
-
     public InstrumentEntity(BigDecimal price, String ticker, String vendor, Date date) {
         this.price = price;
         this.ticker = ticker;
         this.vendor = vendor;
         this.date = date;
         compositeKeyPair = new CompositeKeyPair(ticker, vendor);
-    }
-
-    public CompositeKeyPair getCompositeKeyPair() {
-        return compositeKeyPair;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public String getTicker() {
-        return ticker;
-    }
-
-    public String getVendor() {
-        return vendor;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public void setTicker(String ticker) {
-        compositeKeyPair.setTicker(ticker);
-        this.ticker = ticker;
-    }
-
-    public void setVendor(String vendor) {
-        compositeKeyPair.setVendor(vendor);
-        this.vendor = vendor;
-    }
-
-    public void setCompositeKeyPair(CompositeKeyPair compositeKeyPair) {
-        this.compositeKeyPair = compositeKeyPair;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
     }
 
     /**
@@ -105,4 +67,5 @@ public class InstrumentEntity implements Serializable {
                 ", date=" + date +
                 '}';
     }
+
 }

@@ -4,6 +4,7 @@ import com.mizuho.io.dao.InstrumentDao;
 import com.mizuho.io.entity.InstrumentEntity;
 import com.mizuho.service.InstrumentService;
 import com.mizuho.shared.dto.InstrumentDto;
+import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.BeanUtils;
@@ -14,14 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service @AllArgsConstructor
 public class InstrumentServiceImpl implements InstrumentService {
 
     private final InstrumentDao dao;
-
-    public InstrumentServiceImpl(InstrumentDao dao) {
-        this.dao = dao;
-    }
 
     @Override
     public void saveInstrument(InstrumentDto instrumentDto) {
@@ -36,8 +33,7 @@ public class InstrumentServiceImpl implements InstrumentService {
         Type listType = new TypeToken<List<InstrumentDto>>() {
         }.getType();
 
-        List<InstrumentDto> returnValues;
-        returnValues = new ModelMapper().map(prices, listType);
+        List<InstrumentDto> returnValues = new ModelMapper().map(prices, listType);
         return Optional.of(returnValues);
     }
 
@@ -52,8 +48,7 @@ public class InstrumentServiceImpl implements InstrumentService {
         Type listType = new TypeToken<List<InstrumentDto>>() {
         }.getType();
 
-        List<InstrumentDto> returnValues;
-        returnValues = new ModelMapper().map(prices, listType);
+        List<InstrumentDto> returnValues = new ModelMapper().map(prices, listType);
         return Optional.of(returnValues);
     }
 }
