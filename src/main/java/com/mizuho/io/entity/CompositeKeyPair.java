@@ -40,4 +40,12 @@ public class CompositeKeyPair implements Comparable<CompositeKeyPair>, Serializa
                 .thenComparing((CompositeKeyPair o1) -> o1.vendor.compareTo(vendor))
                 .compare(this, o);
     }
+
+    @Override
+    public String toString() {
+        return "CompositeKeyPair{" +
+                "ticker='" + ticker + '\'' +
+                ", vendor='" + vendor + '\'' +
+                '}';
+    }
 }

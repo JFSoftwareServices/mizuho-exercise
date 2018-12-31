@@ -1,17 +1,16 @@
 package com.mizuho.shared.dto;
 
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
+@Setter
 @JacksonXmlRootElement(localName = "instrument")
 public class InstrumentDto implements Serializable {
     private static final long serialVersionUID = 8503897109288209524L;
@@ -20,4 +19,13 @@ public class InstrumentDto implements Serializable {
     private String vendor;
     private Date date;
 
+    @Override
+    public String toString() {
+        return "InstrumentDto{" +
+                "price=" + price +
+                ", ticker='" + ticker + '\'' +
+                ", vendor='" + vendor + '\'' +
+                ", date=" + date +
+                '}';
+    }
 }

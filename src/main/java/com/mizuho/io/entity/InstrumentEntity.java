@@ -58,4 +58,14 @@ public class InstrumentEntity implements Serializable {
         return Objects.hash(price, ticker, vendor);
     }
 
+    @Override
+    public String toString() {
+        return "InstrumentEntity{" +
+                "price=" + price +
+                ", ticker='" + ticker + '\'' +
+                ", vendor='" + vendor + '\'' +
+                ", date=" + date +
+                '}';
+    }
+
 }

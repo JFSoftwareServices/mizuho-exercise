@@ -26,6 +26,10 @@ public class InstrumentPriceController {
         List<InstrumentDto> instruments = instrumentService.findInstrumentPricesByTicker(ticker)
                 . orElseThrow(() -> new InstrumentPricesNotFoundException(ticker));
 
+        if (instruments.size() == 0){
+            throw new InstrumentPricesNotFoundException(ticker);
+        }
+
         return instrumentDtosToInstrumentRestResponse(instruments);
     }
 
@@ -33,7 +37,11 @@ public class InstrumentPriceController {
     @ResponseBody
     public InstrumentsRestResponse findInstrumentPricesByVendor(@RequestParam("v") String vendor) {
         List<InstrumentDto> instruments = instrumentService.findInstrumentPricesByVendor(vendor)
-                . orElseThrow(() -> new InstrumentPricesNotFoundException(vendor));
+                .orElseThrow(() -> new InstrumentPricesNotFoundException(vendor));
+
+        if (instruments.size() == 0){
+            throw new InstrumentPricesNotFoundException(vendor);
+        }
 
         return instrumentDtosToInstrumentRestResponse(instruments);
     }
