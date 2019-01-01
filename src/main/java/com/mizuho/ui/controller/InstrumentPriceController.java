@@ -8,7 +8,9 @@ import com.mizuho.ui.model.response.InstrumentsRestResponse;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -26,9 +28,9 @@ public class InstrumentPriceController {
     @ResponseBody
     public InstrumentsRestResponse findInstrumentPricesByTicker(@RequestParam("q") String ticker) {
         List<InstrumentDto> instruments = instrumentService.findInstrumentPricesByTicker(ticker)
-                .orElseThrow(() -> new InstrumentPricesNotFoundException(ticker));
+                .orElse(new ArrayList<>());
 
-        if (instruments.size() == 0){
+        if (instruments.size() == 0) {
             throw new InstrumentPricesNotFoundException(ticker);
         }
 
@@ -39,9 +41,9 @@ public class InstrumentPriceController {
     @ResponseBody
     public InstrumentsRestResponse findInstrumentPricesByVendor(@RequestParam("v") String vendor) {
         List<InstrumentDto> instruments = instrumentService.findInstrumentPricesByVendor(vendor)
-                .orElseThrow(() -> new InstrumentPricesNotFoundException(vendor));
+                .orElse(new ArrayList<>());
 
-        if (instruments.size() == 0){
+        if (instruments.size() == 0) {
             throw new InstrumentPricesNotFoundException(vendor);
         }
 
