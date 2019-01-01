@@ -25,14 +25,6 @@ public class CompositeKeyPair implements Comparable<CompositeKeyPair>, Serializa
         this.vendor = vendor;
     }
 
-    private String getTicker() {
-        return ticker;
-    }
-
-    private String getVendor() {
-        return vendor;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
- * A thread safe singleton Instrument Cache that uses an memory concurrent map
+ * A thread safe singleton Instrument Cache that uses concurrent map
  */
 public class InstrumentCacheManager {
     private static InstrumentCacheManager instance;
@@ -32,9 +32,9 @@ public class InstrumentCacheManager {
     }
 
     /**
-     * Adds an Instrument entity to the cache if one isn't present. An entity is determined to be
-     * present in the cache if there is currently an entry with in the cache containing the same
-     * ticker and vendor as the one being added
+     * Adds an InstrumentEntity to the cache if one isn't present. An InstrumentEntity is present if
+     * the cache contains an InstrumentEntity that has the same ticker and vendor as the
+     * one being added
      */
     void putInstrument(InstrumentEntity entity) {
         cache.putIfAbsent(entity.getCompositeKeyPair(), entity);
@@ -45,8 +45,8 @@ public class InstrumentCacheManager {
         return Optional.ofNullable(cache.get(entity.getCompositeKeyPair()));
     }
 
-    Optional<List<InstrumentEntity>> getAllInstrument() {
-        return Optional.of(cache.values().parallelStream().collect(Collectors.toList()));
+    List<InstrumentEntity> getAllInstruments() {
+        return cache.values().parallelStream().collect(Collectors.toList());
     }
 
     void clearInstrument(InstrumentEntity entity) {
@@ -58,13 +58,11 @@ public class InstrumentCacheManager {
      * @return A List of InstrumentEntity ordered by insertion date
      */
     Optional<List<InstrumentEntity>> getAllInstrumentByVendor(String vendor) {
-        return Optional.of(
-                Objects.requireNonNull(getAllInstrument()
-                        .orElse(null))
-                        .parallelStream()
-                        .filter(i -> i.getVendor().equals(vendor))
-                        .collect(Collectors.toList())
-        );
+        return Optional.of((getAllInstruments()
+                .parallelStream()
+                .filter(i -> i.getVendor().equals(vendor))
+                .collect(Collectors.toList())
+        ));
     }
 
     /**
@@ -73,8 +71,7 @@ public class InstrumentCacheManager {
      */
     Optional<List<InstrumentEntity>> getAllInstrumentByTicker(String ticker) {
         return Optional.of(
-                Objects.requireNonNull(getAllInstrument()
-                        .orElse(null))
+                getAllInstruments()
                         .parallelStream()
                         .filter(i -> i.getTicker().equals(ticker))
                         .collect(Collectors.toList()));
@@ -84,18 +81,13 @@ public class InstrumentCacheManager {
      * @param days Instrument entities older than this date will be expired from the cache
      */
     void deleteAllInstrumentsOlderThanDays(int days) {
-        List<InstrumentEntity> instruments =
-                Objects.requireNonNull(getAllInstrument()
-                        .orElse(null))
-                        .parallelStream()
-                        .filter(i -> new DateTime(i.getDate())
-                                .isBefore(new DateTime()
-                                        .minusDays(days)))
-                        .collect(Collectors.toList());
-
-        for (InstrumentEntity entity : instruments) {
-            clearInstrument(entity);
-        }
+        getAllInstruments()
+                .parallelStream()
+                .filter(i -> new DateTime(i.getDate())
+                        .isBefore(new DateTime()
+                                .minusDays(days)))
+                .collect(Collectors.toList())
+                .forEach(this::clearInstrument);
     }
 
     public void clearAllInstruments() {

@@ -78,7 +78,7 @@ class InstrumentControllerIT {
     }
 
     @Test
-    void findInstrumentPricesForVendors_xml() throws JSONException {
+    void findInstrumentPricesForVendors_xml() {
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_XML));
 
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
@@ -108,7 +108,7 @@ class InstrumentControllerIT {
     }
 
     @Test
-    void findAllInstrumentPricesForVendors_xml() throws JSONException {
+    void findAllInstrumentPricesForVendors_xml() {
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_XML));
 
         HttpEntity<String> entity = new HttpEntity<String>(null, headers);
@@ -129,7 +129,6 @@ class InstrumentControllerIT {
         ResponseEntity<String> response = restTemplate.exchange(
                 createURLWithPort("api/instrument/prices?q=VOD.L"),
                 HttpMethod.GET, entity, String.class);
-
 
         String expectedBody = "Could not find prices for instrument VOD.L";
         assertEquals(expectedBody, response.getBody());

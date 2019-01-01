@@ -9,6 +9,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 @RestController
 @RequestMapping("/api")
@@ -24,7 +26,7 @@ public class InstrumentPriceController {
     @ResponseBody
     public InstrumentsRestResponse findInstrumentPricesByTicker(@RequestParam("q") String ticker) {
         List<InstrumentDto> instruments = instrumentService.findInstrumentPricesByTicker(ticker)
-                . orElseThrow(() -> new InstrumentPricesNotFoundException(ticker));
+                .orElseThrow(() -> new InstrumentPricesNotFoundException(ticker));
 
         if (instruments.size() == 0){
             throw new InstrumentPricesNotFoundException(ticker);
@@ -37,7 +39,7 @@ public class InstrumentPriceController {
     @ResponseBody
     public InstrumentsRestResponse findInstrumentPricesByVendor(@RequestParam("v") String vendor) {
         List<InstrumentDto> instruments = instrumentService.findInstrumentPricesByVendor(vendor)
-                . orElseThrow(() -> new InstrumentPricesNotFoundException(vendor));
+                .orElseThrow(() -> new InstrumentPricesNotFoundException(vendor));
 
         if (instruments.size() == 0){
             throw new InstrumentPricesNotFoundException(vendor);
@@ -49,14 +51,8 @@ public class InstrumentPriceController {
     private InstrumentsRestResponse instrumentDtosToInstrumentRestResponse(List<InstrumentDto> instruments) {
         InstrumentsRestResponse response = new InstrumentsRestResponse();
 
-        for (InstrumentDto instrument : instruments) {
-            InstrumentResponseLine instrumentResponseLine = new InstrumentResponseLine(
-                    instrument.getTicker(),
-                    instrument.getVendor(),
-                    instrument.getPrice());
-
-            response.add(instrumentResponseLine);
-        }
+        instruments.stream().map(i -> new InstrumentResponseLine(
+                i.getTicker(), i.getVendor(), i.getPrice())).forEach(response::add);
         return response;
     }
 }

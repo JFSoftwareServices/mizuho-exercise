@@ -31,14 +31,10 @@ public class InstrumentServiceImpl implements InstrumentService {
     }
 
     public Optional<List<InstrumentDto>> findInstrumentPricesByVendor(String vendor) {
-        List prices = dao.findByVendor(vendor).orElse(new ArrayList<>());
-
+        List<InstrumentEntity> instrumentEntities = dao.findByVendor(vendor).orElse(new ArrayList<>());
         Type listType = new TypeToken<List<InstrumentDto>>() {
         }.getType();
-
-        List<InstrumentDto> returnValues;
-        returnValues = new ModelMapper().map(prices, listType);
-        return Optional.of(returnValues);
+        return Optional.of(new ModelMapper().map(instrumentEntities, listType));
     }
 
     public void evictStaleInstrumentsOlderThanDays(int daysAgo) {
@@ -46,14 +42,9 @@ public class InstrumentServiceImpl implements InstrumentService {
     }
 
     public Optional<List<InstrumentDto>> findInstrumentPricesByTicker(String ticker) {
-
-        List prices = dao.findByTicker(ticker).orElse(new ArrayList<>());
-
+        List<InstrumentEntity> instrumentEntities = dao.findByTicker(ticker).orElse(new ArrayList<>());
         Type listType = new TypeToken<List<InstrumentDto>>() {
         }.getType();
-
-        List<InstrumentDto> returnValues;
-        returnValues = new ModelMapper().map(prices, listType);
-        return Optional.of(returnValues);
+        return Optional.of(new ModelMapper().map(instrumentEntities, listType));
     }
 }

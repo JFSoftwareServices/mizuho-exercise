@@ -3,6 +3,7 @@ package com.mizuho.io.dao.impl;
 import com.mizuho.io.entity.InstrumentEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.cache.CacheManager;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ class InstrumentCacheManagerTest {
     private final InstrumentCacheManager cacheManager = InstrumentCacheManager.getInstance();
 
     @BeforeEach
-    void setup(){
+    void setup() {
         cacheManager.clearAllInstruments();
     }
 
@@ -86,8 +87,19 @@ class InstrumentCacheManagerTest {
         entities.add(entity);
         InstrumentCacheManager.getInstance().putInstrument(entity);
 
-        assertEquals(Optional.of(entities), InstrumentCacheManager
+        assertEquals(entities, InstrumentCacheManager
                 .getInstance()
-                .getAllInstrument());
+                .getAllInstruments());
+    }
+
+    @Test
+    public void get() {
+
+//        InstrumentCacheManager.getInstance().putInstrument(null);
+
+//        InstrumentCacheManager.getInstance().getInstrument(new InstrumentEntity());
+//        InstrumentCacheManager.getInstance().getAllInstruments();
+
+        InstrumentCacheManager.getInstance().getAllInstrumentByVendor(null);
     }
 }
